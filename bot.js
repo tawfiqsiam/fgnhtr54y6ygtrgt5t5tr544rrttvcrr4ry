@@ -7,47 +7,71 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
+client.on("guildMemberAdd", member => {
+  member.createDM().then(function (channel) {
+  return channel.send(`**ولكم نورت السيرفر
+ welcome to Nasa Server__**__** 
+ ${member}  
+ `) 
+}).catch(console.error)
+})
+
+
+
+
+
+
 client.on('guildMemberAdd', member => {
-    let channel = member.guild.channels.find('name', 'chat');
-    let memberavatar = member.user.avatarURL
-      if (!channel) return;
-    let embed = new Discord.RichEmbed()
-        .setColor('RANDOM')
-        .setThumbnail(memberavatar)
-        .addField(':running_shirt_with_sash: | name :  ',`${member}`)
-        .addField(':loudspeaker: | *** Enjoy Your Over Time - استمتع بوقت رائع***' , `***? - Welcome To NaSa - اهلا بك في سيرفر اوت ناسا*** , ${member}`)
-        .addField(':		id: | user :', "**[" + `${member.id}` + "]**" )
-                .addField('➡| انت العضو رقم',`${member.guild.memberCount}`)
-               
-                  .addField("Name:",`<@` + `${member.id}` + `>`, true)
-                     
-                                     .addField(' الـسيرفر', `${member.guild.name}`,true)
-                                       
-     .setFooter(`${member.guild.name}`)
-        .setTimestamp()
-   
-      channel.sendEmbed(embed);
+  
+  const channel = member.guild.channels.find(ch => ch.name === '፨─chat');////اسم الشات
+ 
+  if (!channel) return;
+
+  channel.send(`**welcome to __KilS CommunitY :heart:️__**, ${member}`);
+})
+
+
+const invites = {};////ده كود تم دعوتك بواسطة
+
+const wait = require('util').promisify(setTimeout);
+
+client.on('ready', () => {
+  wait(1000);
+
+  client.guilds.forEach(g => {
+    g.fetchInvites().then(guildInvites => {
+      invites[g.id] = guildInvites;
     });
-    
-    client.on('guildMemberRemove', member => {
+  });
+});
+
+client.on('guildMemberAdd', member => {
+  member.guild.fetchInvites().then(guildInvites => {
+    const ei = invites[member.guild.id];
+    invites[member.guild.id] = guildInvites;
+    const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
+    const inviter = client.users.get(invite.inviter.id);
+    const logChannel = member.guild.channels.find(channel => channel.name === "፨─chat");////اسم الشات
+    logChannel.send(` **Invited by:** <@${inviter.id}>`);
+  });
+
+});
+
+
+ client.on('guildMemberRemove', member => {///ده لما حد يخرج
         var embed = new Discord.RichEmbed()
         .setAuthor(member.user.username, member.user.avatarURL)
         .setThumbnail(member.user.avatarURL)
-        .setTitle(`لقد خرج صديق :( :raised_hand::skin-tone-1: :pensive:`)
-        .setDescription(`مع السلامة يحبي :raised_hand::skin-tone-1: :pensive: `)
-        .addField(':bust_in_silhouette:   تبقي',`**[ ${member.guild.memberCount} ]**`,true)
+        .setDescription(`**مع السلامه تشرفنا بك ✋😔**`)
+        .addField('👤   تبقي',`**[ ${member.guild.memberCount} ]**`,true)
         .setColor('RED')
-        .setFooter(`====شكرا للاستمتاع====`, ' https://cdn.discordapp.com/attachments/397818254439219217/399292026782351381/shy.png')
-    
-    var channel =member.guild.channels.find('name', 'chat')
+   
+    var channel =member.guild.channels.find('name', '፨─chat')///اسم الشات
     if (!channel) return;
     channel.send({embed : embed});
     })
-	
-	
-	
-	
-	
-	
-	
+
+
+
 client.login(process.env.BOT_TOKEN);
+ 
