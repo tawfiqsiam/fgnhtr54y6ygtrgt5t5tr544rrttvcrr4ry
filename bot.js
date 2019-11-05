@@ -23,7 +23,7 @@ client.on("guildMemberAdd", member => {
 
 client.on('guildMemberAdd', member => {
   
-  const channel = member.guild.channels.find(ch => ch.name === '፨─chat');////اسم الشات
+  const channel = member.guild.channels.find(ch => ch.name === 'chat');////اسم الشات
  
   if (!channel) return;
 
