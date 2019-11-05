@@ -51,7 +51,7 @@ client.on('guildMemberAdd', member => {
     invites[member.guild.id] = guildInvites;
     const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
     const inviter = client.users.get(invite.inviter.id);
-    const logChannel = member.guild.channels.find(channel => channel.name === "፨─chat");////اسم الشات
+    const logChannel = member.guild.channels.find(channel => channel.name === "chat");////اسم الشات
     logChannel.send(` **Invited by:** <@${inviter.id}>`);
   });
 
@@ -62,11 +62,11 @@ client.on('guildMemberAdd', member => {
         var embed = new Discord.RichEmbed()
         .setAuthor(member.user.username, member.user.avatarURL)
         .setThumbnail(member.user.avatarURL)
-        .setDescription(`**مع السلامه تشرفنا بك ✋😔**`)
-        .addField('👤   تبقي',`**[ ${member.guild.memberCount} ]**`,true)
+        .setDescription(`** We will miss you ✋😔**`)
+        .addField('👤   Back to',`**[ ${member.guild.memberCount} ]**`,true)
         .setColor('RED')
    
-    var channel =member.guild.channels.find('name', '፨─chat')///اسم الشات
+    var channel =member.guild.channels.find('name', 'chat')///اسم الشات
     if (!channel) return;
     channel.send({embed : embed});
     })
